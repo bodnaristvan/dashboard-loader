@@ -1,0 +1,59 @@
+<!doctype html>
+<html class="no-js" lang="">
+<!--
+This file should be loaded from the filesystem, so even if network is down, the browser can refresh it every 30 minutes -- this eliminates the need for a chrome extension that reloads the page.
+-->
+	<head>
+		<meta charset="utf-8" />
+		<title>Kinja Dashboard</title>
+		<meta name="description" content="Empty page to reload dashboards" />
+		<!-- reload page every 29 minutes -->
+		<meta http-equiv="refresh" content="1740">
+		<style type="text/css">
+			body {
+				padding: 0;
+				margin: 0;
+			}
+			iframe {
+				overflow: hidden;
+				height: 100vh;
+				width: 100vw;
+			}
+		</style>
+	</head>
+	<body>
+	    <iframe id="dashboard" src="about:blank" frameborder="0"></iframe>
+		<script type="text/javascript">
+			var dashboardName = '<%hostname%>',
+				screenIndex = <%screenIndex%>,
+
+				iframeEl = document.getElementById('dashboard'),
+
+				configUrl = 'https://raw.githubusercontent.com/bodnaristvan/dashboard-loader/master/config.js',
+				refreshInterval = 2 * 60 * 1000; // (every 2 minutes)
+
+			// load the script file containing the dash config
+			function loadConfig() {
+				var script = document.createElement('script');
+				script.setAttribute('src', configUrl + '?rnd=' + Math.floor(Math.random() * 100000));
+				script.setAttribute('type', 'text/javascript');
+				document.body.appendChild(script);
+				window.setTimeout(function () {
+					document.body.removeChild(script);
+				}, 10000)
+			}
+
+			// parse config file and reload the dashboard iframe if needed
+			function config(conf) {
+				var newUrl = conf[dashboardName][(screenIndex-1)];
+				if (iframeEl.src !== newUrl) {
+					iframeEl.src = newUrl;
+				}
+			}
+
+			// rerun config every 2 minutes
+			loadConfig();
+			window.setInterval(loadConfig, refreshInterval);
+		</script>
+	</body>
+</html>
