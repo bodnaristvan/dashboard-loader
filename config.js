@@ -5,12 +5,12 @@ config(
 			"http://dash.kinja-ops.com/grafana/#/dashboard/file/frontend.json"
 		],
 		// budapest frontend room mini #1
-		"e-mini": [
+		"e2-mini": [
 			"http://dash.kinja-ops.com/grafana/#/dashboard/file/frontend.json",
 			"http://dash.kinja-ops.com/"
 		],
 		// budapest frontend room mini #2
-		"e2-mini": [
+		"e-mini": [
 			"http://dash.kinja-ops.com/?page=dashboard/tests&minutes=30&sound=off&night=off&deploys=on",
 			"http://dash.kinja-ops.com/"
 		]
